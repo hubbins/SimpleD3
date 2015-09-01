@@ -1,0 +1,58 @@
+<html>
+<head>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.2/backbone-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+	<style>
+		svg {
+			border: 1px solid black;
+			}
+			
+			circle {
+			fill: #08c;
+			opacity: 0.5;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		Click in the box
+	</div>
+	<svg xmlns="http://www.w3.org/2000/svg"></svg>
+	<script>
+		var CircleView = Backbone.View.extend({
+			initialize: function() {
+				this.d3 = d3.select(this.el);
+			},
+			render: function() {
+				// randomly make up numbers for cx, cy, and r
+				var cx = Math.random() * 200,
+					cy = Math.random() * 200,
+					r = Math.random() * 50;
+				
+				this.d3.attr("cx", cx)
+						.attr("cy", cy)
+						.attr("r", r);
+			}
+		});
+		
+		var SVGView = Backbone.View.extend({
+				el: "svg",
+				initialize: function() {
+					this.d3 = d3.select(this.el);
+			},
+			events: {
+				"click": "makeCircle" 
+			},
+			makeCircle: function() {
+				var circ = this.d3.append("circle"),
+					view = new CircleView({el: circ[0]});
+				view.render();
+			}
+		});
+		
+		var svgView = new SVGView();
+	</script>  
+</body>
+</html>

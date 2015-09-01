@@ -1,0 +1,91 @@
+<html>
+<head>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.2/backbone-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+	<style>
+		.bar {
+			fill: steelblue;
+		}
+		
+		.bar:hover {
+			fill: brown;
+		}
+		
+		.axis {
+			font: 10px sans-serif;
+		}
+		
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+		
+		.x.axis path {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<svg xmlns="http://www.w3.org/2000/svg"></svg>
+	<script src="barchart.js"></script>
+	<script>
+		/*
+		var margin = {top: 20, right: 20, bottom: 30, left: 40},
+			width = 960 - margin.left - margin.right,
+			height = 500 - margin.top - margin.bottom;
+			
+		var svg = d3.select("body").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+		d3.tsv("data.tsv", type, function(error, data) {
+			var chart = BarChart();
+			var g = svg.append("g")
+				.attr("transform", "translate(0, 0)")
+				.data(data)
+				.call(chart);
+
+			// and if we want to update the chart
+			//g.data(someUpdatedData);
+			//chart.update();
+		});		
+		*/
+		function type(d) {
+			d.frequency = +d.frequency;
+			return d;
+		}
+		
+		var MyView = Backbone.View.extend({
+			initialize: function(options) {
+				this.data = options.data || [];
+				this.chart = BarChart(this.data);
+			},
+			render: function() {
+				this.g = d3.select('svg').append('g')
+							.attr("transform", "translate(0, 0)")
+							.data(this.data).call(this.chart);
+	
+				return this;
+			},
+			events: {
+				"click .update": "update"
+			},
+			update: function() {
+				this.g.data(someUpdatedData);
+				this.chart.update();
+			}
+		});
+					
+		d3.tsv("data.tsv", type, function(error, data) {
+			var myView = new MyView({data: data});
+			myView.render();
+		});
+	</script>  
+</body>
+</html>

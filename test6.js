@@ -23,16 +23,16 @@ var ChartView = Backbone.View.extend({
 			.attr("width", width)
 			.attr("height", barHeight * values.length);
 		
-		var bar = chart.selectAll("g")
+		var bars = chart.selectAll("g")
 			.data(values)
-		.enter().append("g")
+			.enter().append("g")
 			.attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
 		
-		bar.append("rect")
+		bars.append("rect")
 			.attr("width", x)
 			.attr("height", barHeight - 1);
 		
-		bar.append("text")
+		bars.append("text")
 			.attr("x", function(d) { return x(d) - 3; })
 			.attr("y", barHeight / 2)
 			.attr("dy", ".35em")

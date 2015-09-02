@@ -25,7 +25,7 @@ var ChartView = Backbone.View.extend({
 		// clear element content
 		this.$el.html("");
 		
-		d3.select(".chart")
+		d3.select(this.el)
 		.selectAll("div")
 			.data(values)
 		.enter().append("div")

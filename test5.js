@@ -53,3 +53,4 @@ var ChartData = Backbone.Collection.extend({
 var yearData = new YearData();
 var chartView = new ChartView({el: ".chart", model: yearData});
 yearData.fetch();
+

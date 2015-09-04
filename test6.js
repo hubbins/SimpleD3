@@ -5,7 +5,7 @@ var YearData = Backbone.Model.extend({
 
 var ChartView = Backbone.View.extend({
 	initialize: function() {
-		this.model.bind("sync", this.render, this);
+		this.model.on("sync", this.render, this);
 	},
 	render: function() {
 		var yearData = this.model.toJSON().data;
